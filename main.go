@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"github.com/gin-gonic/gin"
+)
 
 // Movie结构体
 type Movie struct {
@@ -19,7 +21,29 @@ type Director struct {
 // 定义一个切片存储数据
 var movies []Movie
 
+func getMovies(c *gin.Context) {
+}
+func getMovie(c *gin.Context) {
+}
+func createMovie(c *gin.Context) {
+
+}
+func updateMovie(c *gin.Context) {
+
+}
+func deleteMovie(c *gin.Context) {
+
+}
 func main() {
+	// 创建路由
+	r := gin.Default()
+
+	r.GET("/movies", getMovies)
+	r.GET("/movies/:id", getMovie)
+	r.POST("/movies", createMovie)
+	r.PUT("/movies/:id", updateMovie)
+	r.DELETE("/movies/:id", deleteMovie)
+
 	movies = append(movies, Movie{
 		ID:       "1",
 		Isbn:     "123",
@@ -32,5 +56,5 @@ func main() {
 		Tittle:   "分手大师",
 		Director: &Director{FirstName: "超", LastName: "邓"},
 	})
-	fmt.Println(movies)
+
 }
