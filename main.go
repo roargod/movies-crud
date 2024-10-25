@@ -52,7 +52,24 @@ func createMovie(c *gin.Context) {
 	c.JSON(http.StatusOK, movie)
 }
 func updateMovie(c *gin.Context) {
-
+	// 切出其中的id字段
+	id, ok := c.Params.Get("id")
+	if !ok {
+		c.JSON(http.StatusOK, gin.H{"err": "无效的id"})
+		return
+	}
+	// 遍历寻找该电影id
+	for i := 0; i < len(movies); i++ {
+		// 找到目标电影
+		if movies[i].ID == id {
+			var movie Movie
+			movie = movies[i]
+			movies = append(movies[:i], movies[i+1:]...)
+			movie.ID = id
+			movies = append(movies, movie)
+			return
+		}
+	}
 }
 func deleteMovie(c *gin.Context) {
 	// 切出其中的id字段
@@ -94,5 +111,5 @@ func main() {
 		Tittle:   "分手大师",
 		Director: &Director{FirstName: "超", LastName: "邓"},
 	})
-
+	r.Run()
 }
